@@ -59,3 +59,74 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+----
+
+sudo apt update
+sudo apt install -y python3-picamera2
+
+
+----
+
+from picamera2 import Picamera2
+
+# Initialize the camera
+picam2 = Picamera2()
+
+# Configure the camera
+preview_config = picam2.create_preview_configuration()
+picam2.configure(preview_config)
+
+# Start the camera
+picam2.start()
+print("Camera started. Press Ctrl+C to stop.")
+
+# Keep the camera running
+try:
+    while True:
+        pass
+except KeyboardInterrupt:
+    print("Stopping camera...")
+    picam2.stop()
+
+------
+
+
+from picamera2 import Picamera2
+
+picam2 = Picamera2()
+config = picam2.create_still_configuration()
+picam2.configure(config)
+
+picam2.start()
+picam2.capture_file("test.jpg")
+print("Image saved as test.jpg")
+picam2.stop()
+
+-------
+
+
+import cv2
+from picamera2 import Picamera2
+
+# Initialize Picamera2
+picam2 = Picamera2()
+preview_config = picam2.create_preview_configuration(main={"size": (640, 480)})
+picam2.configure(preview_config)
+
+# Start the camera
+picam2.start()
+
+while True:
+    # Capture frames
+    frame = picam2.capture_array()
+    cv2.imshow("Camera Frame", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+picam2.stop()
+cv2.destroyAllWindows()
+
+
+-------
+
