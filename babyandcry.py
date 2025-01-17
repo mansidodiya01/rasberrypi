@@ -59,7 +59,7 @@ def main():
         return
 
     # Synchronization interval in seconds
-    interval_between_inference = 0.4
+    interval_between_inference = 0.5
 
     # Start audio recording
     record.start_recording()
